@@ -1,13 +1,11 @@
+FROM python:3.9-alpine
 
-FROM python:3.9-alpine AS builder
+ADD . /app
+COPY . /app
+WORKDIR /app
 
-WORKDIR /src
-COPY requirements.txt /src
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip3 install -r requirements.txt
+EXPOSE 9090
+RUN pip install -r requirements.txt
 
-COPY . .
-
-CMD ["python3", "server.py"]
-
+CMD ["python","-u", "app.py"]
 
